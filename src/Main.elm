@@ -137,8 +137,8 @@ addNum : Model -> Int -> Float
 addNum model keyVal =
     if model.decimal then
         let
-            fraction = 10 ^ (model.decimalCount+1) |> toFloat
-                
+            fraction =
+                10 ^ (model.decimalCount + 1) |> toFloat
         in
         model.register + 1 / fraction * toFloat keyVal
 
@@ -159,12 +159,17 @@ resultBox model =
         , style "text-align" "right"
         , style "padding" "1rem"
         ]
-        [ case model.mode of
-            Acc ->
-                String.fromFloat model.accumulator |> text
+        [ let
+            value =
+                String.fromFloat <|
+                    case model.mode of
+                        Acc ->
+                            model.accumulator
 
-            Reg ->
-                String.fromFloat model.register |> text
+                        Reg ->
+                            model.register
+          in
+          text value
         ]
 
 
